@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
                         //setting warnings for temperature monitoring 
                         var warnh = this.state.warn_temph
                         var warnl = this.state.warn_templ
-                        if (result[1] >= 35) {
+                        if (result[1] >= this.props.tempH) {
                             if (!warnh) {
                                 this.setState({
                                     warn_temph: true
@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
                                     warn_templ: false
                                 })
                             }
-                        } else if (result[1] <= 0) {
+                        } else if (result[1] <= this.props.tempL) {
                             if (!warnl) {
                                 this.setState({
                                     warn_templ: true
@@ -148,7 +148,7 @@ class Dashboard extends React.Component {
                         //setting warning for tvoc and eco2 monitoring
                         var warn_tv = this.state.warn_tvoc
                         var warn_ec = this.state.warn_eco2
-                        if (result[3] >= 500) {
+                        if (result[3] >= this.props.tvocV) {
                             if (!warn_tv) {
                                 this.setState({
                                     warn_tvoc: true
@@ -168,7 +168,7 @@ class Dashboard extends React.Component {
                             }
                         }
 
-                        if (result[2] >= 1500) {
+                        if (result[2] >= this.props.eco2V) {
                             if (!warn_ec) {
                                 this.setState({
                                     warn_eco2: true
