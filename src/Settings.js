@@ -10,7 +10,7 @@ class Setting extends React.Component {
 
     onFinish = (values) => {
         console.log(values)
-        this.props.handleSettings(values.TH,values.TL,values.TV,values.EC)
+        this.props.handleSettings(values.TH,values.TL,values.TV,values.EC,values.LIMIT)
         message.success("New Settings Saved!")
     }
 
@@ -35,6 +35,7 @@ class Setting extends React.Component {
                         TL: this.props.tempL,
                         TV: this.props.tvocV,
                         EC: this.props.eco2V,
+                        LIMIT: this.props.limit,
                         remember: true
                     }}
                 >
@@ -65,6 +66,14 @@ class Setting extends React.Component {
                     <Form.Item
                         label="ECO2 Limit "
                         name="EC"
+                        rules={[{
+                                required: false,
+                        },]}>
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item
+                        label="Extra Warning Time Limit"
+                        name="LIMIT"
                         rules={[{
                                 required: false,
                         },]}>

@@ -35,7 +35,11 @@ class Dashboard extends React.Component {
             warn_temph: false,
             warn_templ: false,
             warn_tvoc: false,
-            warn_eco2: false
+            warn_eco2: false,
+            t1:null, //warn start time for temp hot
+            t2:null, //warn start time for temp cold
+            t3:null, //warn start time for tvoc
+            t4:null, //warn start time for eco2
         }
     }
 
@@ -81,7 +85,7 @@ class Dashboard extends React.Component {
                 }
                 switch (topic) {
                     case ("IC.embedded/SWAY/" + channel + "/5sec"):
-                        console.log("5sec")
+                        //console.log("5sec"+','+msg)
                         //alert("topic 5sec")
                         var result = msg.split(",")
                         //ref:  s = str(humidity)+","+str(temp)+","+str(eco2)+","+str(tvoc) + ","+str(altitude)
@@ -93,54 +97,94 @@ class Dashboard extends React.Component {
                             alt: Math.round(result[4] * 100) / 100
                         })
 
-                        var time = new Date().toLocaleString()
-                        console.log('time',time)
+                        var t = new Date()
+                        var time = t.toLocaleString()
+
+                        //console.log('time',time)
                         //setting warnings for temperature monitoring 
                         var warnh = this.state.warn_temph
                         var warnl = this.state.warn_templ
                         if (result[1] >= this.props.tempH) {
+                            //too hots
                             if (!warnh) {
                                 this.setState({
-                                    warn_temph: true
+                                    warn_temph: true,
+                                    t1:t,
                                 })
                                 notification.warn({
                                     message: 'Extreme Whether',
                                     description:
-                                        'Temperature above 35 °C at '+time,
+                                        'Temperature above '+this.props.tempH+' °C at '+time,
                                     duration: 0,
                                 })
                             }
                             if (warnl === true) {
                                 this.setState({
-                                    warn_templ: false
+                                    warn_templ: false,
+                                    t2:null,
                                 })
                             }
+
+                            //judge if time exceed the limit 
+                            var dif = Math.round((t-this.state.t1)/1000)
+                            console.log(dif)
+                            if(dif>=this.props.limit){
+                                notification.error({
+                                    placement:"bottomLeft",
+                                    key:"temphot",
+                                    message: 'Extreme Whether For Long',
+                                    description:
+                                        'Temperature above '+this.props.tempH+' °C at for over '+ dif +'s',
+                                    duration: 0,
+                                })
+                            }
+
                         } else if (result[1] <= this.props.tempL) {
+                            // too cold 
                             if (!warnl) {
                                 this.setState({
-                                    warn_templ: true
+                                    warn_templ: true,
+                                    t2:t,
                                 })
                                 notification.warn({
                                     message: 'Extreme Whether',
                                     description:
-                                        'Temperature below 0 °C at '+time,
+                                        'Temperature below'+ this.props.tempL+'°C at '+time,
                                     duration: 0,
                                 })
                             }
                             if (warnh === true) {
                                 this.setState({
-                                    warn_temph: false
+                                    warn_temph: false,
+                                    t1:null,
                                 })
                             }
+                            
+                            //judge if time exceed the limit 
+                            var dif = Math.round((t-this.state.t2)/1000)
+                            console.log(dif)
+                            if(dif>=this.props.limit){
+                                notification.error({
+                                    placement:"bottomLeft",
+                                    key:"tempcold",
+                                    message: 'Extreme Whether For Long',
+                                    description:
+                                        'Temperature below '+this.props.tempL+' °C at for over '+ dif +'s',
+                                    duration: 0,
+                                })
+                            }
+
                         } else {
                             if (warnh === true) {
                                 this.setState({
-                                    warn_temph: false
+                                    warn_temph: false,
+                                    t1:null,
                                 })
                             }
                             if (warnl === true) {
                                 this.setState({
-                                    warn_templ: false
+                                    warn_templ: false,
+                                    t2:null,
                                 })
                             }
                         }
@@ -149,9 +193,11 @@ class Dashboard extends React.Component {
                         var warn_tv = this.state.warn_tvoc
                         var warn_ec = this.state.warn_eco2
                         if (result[3] >= this.props.tvocV) {
+                            // exceed tvoc limit
                             if (!warn_tv) {
                                 this.setState({
-                                    warn_tvoc: true
+                                    warn_tvoc: true,
+                                    t3:t
                                 })
                                 notification.warn({
                                     message: 'Unwell Environment',
@@ -160,18 +206,34 @@ class Dashboard extends React.Component {
                                     duration: 0,
                                 })
                             }
+                            //judge if time exceed the limit 
+                            var dif = Math.round((t-this.state.t3)/1000)
+                            console.log(dif)
+                            if(dif>=this.props.limit){
+                                notification.error({
+                                    placement:"bottomLeft",
+                                    key:"tvocV",
+                                    message: 'Extreme Whether For Long',
+                                    description:
+                                        'TVOC above '+this.props.tvocV+' PPB at for over '+ dif +'s',
+                                    duration: 0,
+                                })
+                            }
                         } else {
                             if (warn_tv === true) {
                                 this.setState({
-                                    warn_tvoc: false
+                                    warn_tvoc: false,
+                                    t3:null
                                 })
                             }
                         }
 
                         if (result[2] >= this.props.eco2V) {
+                            //exceed eco2 limit
                             if (!warn_ec) {
                                 this.setState({
-                                    warn_eco2: true
+                                    warn_eco2: true,
+                                    t4:t
                                 })
                                 notification.warn({
                                     message: 'Unwell Environment',
@@ -180,10 +242,24 @@ class Dashboard extends React.Component {
                                     duration: 0,
                                 })
                             }
+                            //judge if time exceed the limit 
+                            var dif = Math.round((t-this.state.t4)/1000)
+                            console.log(dif)
+                            if(dif>=this.props.limit){
+                                notification.error({
+                                    placement:"bottomLeft",
+                                    key:"temphot",
+                                    message: 'Extreme Whether For Long',
+                                    description:
+                                        'ECO2 above '+this.props.eco2V+' PPM at for over '+ dif +'s',
+                                    duration: 0,
+                                })
+                            }
                         } else {
                             if (warn_ec === true) {
                                 this.setState({
-                                    warn_eco2: false
+                                    warn_eco2: false,
+                                    t4:null
                                 })
                             }
                         }
@@ -192,7 +268,7 @@ class Dashboard extends React.Component {
                         break
                     // keep reporting error if not aware user
                     case ("IC.embedded/SWAY/" + channel + "/2sec"):
-                        console.log("2sec")
+                        //console.log("2sec"+','+msg)
                         var result = msg.split(",");
                         //s = str(angle)+","+ direction
                         this.setState({
@@ -201,9 +277,9 @@ class Dashboard extends React.Component {
                         })
                         break
                     case ("IC.embedded/SWAY/" + channel + "/calibrate"):
-                        console.log("calibrate")
-                        var result = msg
-                        if (result === 1) {
+                        //console.log("calibrate"+','+msg)
+                        if (msg == 1) {
+                            //console.log('calibrate here')
                             message.info({
                                 key: 'update2',
                                 content: 'Device Under Calibration',
@@ -211,7 +287,8 @@ class Dashboard extends React.Component {
                             this.setState({
                                 calibrating: true
                             })
-                        } else if (result === 0) {
+                        } else if (msg == 0) {
+                            //console.log('calibrate done')
                             message.success({
                                 key: 'update2',
                                 content: 'Calibration Done',
@@ -223,7 +300,7 @@ class Dashboard extends React.Component {
                         }
                         break
                     default:
-                        console.log('topic recieved: ' + topic)
+                        //console.log('topic recieved: ' + topic + ":" + msg)
                 }
             });
         }
@@ -233,7 +310,7 @@ class Dashboard extends React.Component {
         //alert("subscribe topic: "+topic+", qos:"+qos)
         this.client.subscribe(topic, { qos: qos }, (error) => {
             if (error) {
-                console.log("Subscribe to topics error", error);
+                //console.log("Subscribe to topics error", error);
                 return;
             }
         });
@@ -267,7 +344,7 @@ class Dashboard extends React.Component {
                     <Col span={7}></Col>
                 </Row>
                 <Row justify="start">
-                    <Col span={9}>
+                    <Col span={11}>
                         <Connect
                             connect={this.handleConnect}
                             connectStatus={this.state.connectStatus}
@@ -275,10 +352,10 @@ class Dashboard extends React.Component {
 
                         />
                     </Col>
-                    <Col span={7}>
+                    <Col span={5}>
                         <Card
                             title="Device Status"
-                            style={{ minHeight: '280px' }}>
+                            style={{ minHeight: '290px' }}>
                             <div style={{ textAlign: 'center' }}>
                                 <img src={this.state.active ? on : off} style={{ height: '100px' }} alt="" />
                                 <header style={{ fontSize: '18pt',fontFamily:'cursive'}}>{this.state.active ? 'ACTIVE' : this.state.connectStatus === 'Connected' ? 'INACTIVE' : 'UNKNOWN'}</header>
@@ -287,7 +364,7 @@ class Dashboard extends React.Component {
                     </Col>
                     <Col span={1}></Col>
                     <Col span={7}>
-                        <Card style={{ height: '280px' }} title='Realtime Alert'>
+                        <Card style={{ height: '290px' }} title='Realtime Alert'>
                             <Space direction="vertical" style={{ width: '100%' }}>
                                 <Alert type="error" message="High temperature ( >35°C )" style={{ display: this.state.connectStatus==='Connected'?this.state.warn_temph ?'block':'none':'none'}} />
                                 <Alert type="error" message="Low temperature ( <10°C )" style={{ display: this.state.connectStatus==='Connected'?this.state.warn_templ ? 'block' : 'none':'none' }} />

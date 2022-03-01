@@ -1,5 +1,5 @@
 import { Form, Input, Button, Card,Row,Col } from 'antd';
-import walk from './images/walking.jpg';
+import walk from './images/walking.png';
 
 const { Meta } = Card;
 
@@ -67,7 +67,7 @@ function Login(props) {
           }}
         >
           <Button type="primary" htmlType="submit">
-            Submit
+            LOGIN
           </Button>
         </Form.Item>
       </Form>

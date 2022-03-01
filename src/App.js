@@ -31,6 +31,7 @@ class App extends React.Component {
       humidL: 10,
       tvocV: 500,
       eco2V: 1500,
+      limit: 30,
     }
   }
 
@@ -54,12 +55,13 @@ class App extends React.Component {
     window.location.reload()
   }
 
-  handleSettings = (th, tl, tv, tc) => {
+  handleSettings = (th, tl, tv, tc,limit) => {
     this.setState({
       tempH: th,
       tempL: tl,
       tvocV: tv,
       eco2V: tc,
+      limit:limit
     })
   }
 
@@ -113,6 +115,7 @@ class App extends React.Component {
               humidL={this.state.humidL}
               tvocV={this.state.tvocV}
               eco2V={this.state.eco2V}
+              limit={this.state.limit}
             />
           </Content>
           <Footer style={{ textAlign: 'center', height: "10px" }}>created by SWAY(2020 Feb)</Footer>
@@ -138,6 +141,7 @@ function SetDisplay(props) {
         tempL={props.tempL}
         tvocV={props.tvocV}
         eco2V={props.eco2V}
+        limit={props.limit}
       />
     }
   } else if (page === "faq") {
@@ -153,6 +157,7 @@ function SetDisplay(props) {
       tempL={props.tempL}
       tvocV={props.tvocV}
       eco2V={props.eco2V}
+      limit={props.limit}
     />
   }
 }

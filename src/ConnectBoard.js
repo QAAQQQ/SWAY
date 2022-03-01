@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Form, Input, Button, message} from "antd";
+import { Card, Form, Input, Button, message, Typography } from "antd";
 
+const { Text } = Typography;
 
 class Connect extends React.Component {
     constructor(props) {
@@ -52,7 +53,7 @@ class Connect extends React.Component {
         return (
             <Card
                 title="Device Connection"
-                style={{ height: "280px"}}
+                style={{ height: "290px" }}
                 actions={[
                     <Button type="primary" onClick={this.handleConnect}>
                         {this.props.connectStatus}
@@ -61,7 +62,7 @@ class Connect extends React.Component {
                         Disconnect
                     </Button>,
                 ]}
-                >
+            >
                 <Form
                     style={{ marginLeft: '10px', marginTop: '10px' }}
                     name="Connection"
@@ -92,6 +93,7 @@ class Connect extends React.Component {
                             onChange={this.handleInputChange} />
                     </Form.Item>
                 </Form>
+                <Text style={{paddingLeft:'15px'}} type="secondary">Note: Befor going to Settings, please DISCONNECT!</Text>
             </Card>
         );
     }
