@@ -94,7 +94,7 @@ class Dashboard extends React.Component {
                             tvoc:result[3]
                         }
                         axios
-                            .post('http://localhost:8082/api/books',data)
+                            .post('http://localhost:8082/api/sticks',data)
                             .catch(err => {
                                 console.log("Error in post record!");
                               })
@@ -122,7 +122,7 @@ class Dashboard extends React.Component {
                                     t1:t,
                                 })
                                 notification.warn({
-                                    message: 'Extreme Whether',
+                                    message: 'Extreme Weather',
                                     description:
                                         'Temperature above '+this.props.tempH+' °C at '+time,
                                     duration: 0,
@@ -142,7 +142,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"temphot",
-                                    message: 'Extreme Whether For Long',
+                                    message: 'Extreme Weather for Long',
                                     description:
                                         'Temperature above '+this.props.tempH+' °C for over '+ dif +'s',
                                     duration: 0,
@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
                                     t2:t,
                                 })
                                 notification.warn({
-                                    message: 'Extreme Whether',
+                                    message: 'Extreme Weather',
                                     description:
                                         'Temperature below'+ this.props.tempL+'°C at '+time,
                                     duration: 0,
@@ -177,7 +177,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"tempcold",
-                                    message: 'Extreme Whether For Long',
+                                    message: 'Extreme Weather for Long',
                                     description:
                                         'Temperature below '+this.props.tempL+' °C for over '+ dif +'s',
                                     duration: 0,
@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"tvocV",
-                                    message: 'Extreme Whether For Long',
+                                    message: 'Extreme Weather for Long',
                                     description:
                                         'TVOC above '+this.props.tvocV+' PPB for over '+ dif +'s',
                                     duration: 0,
@@ -259,7 +259,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"temphot",
-                                    message: 'Extreme Whether For Long',
+                                    message: 'Extreme Weather for Long',
                                     description:
                                         'ECO2 above '+this.props.eco2V+' PPM for over '+ dif +'s',
                                     duration: 0,
@@ -284,9 +284,9 @@ class Dashboard extends React.Component {
                             angle:result[0]
                         }
                         axios
-                            .post('http://localhost:8082/api/books',data2)
+                            .post('http://localhost:8082/api/sticks',data2)
                             .catch(err => {
-                                console.log("Error in CreateBook!");
+                                console.log("Error in post record!")
                               })
                        
                     
