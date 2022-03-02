@@ -3,6 +3,7 @@
 import React from "react";
 import { Row, Col, message, Typography, Divider, Card, Alert, Space, notification } from "antd";
 import mqtt from 'mqtt';
+import axios from 'axios'
 
 import Connect from './ConnectBoard'
 import Temperature from './TemperatureBoard'
@@ -85,9 +86,18 @@ class Dashboard extends React.Component {
                 }
                 switch (topic) {
                     case ("IC.embedded/SWAY/" + channel + "/5sec"):
-                        //console.log("5sec"+','+msg)
-                        //alert("topic 5sec")
                         var result = msg.split(",")
+                        var data = {
+                            temp:result[1],
+                            humidity:result[0],
+                            eco2:result[2],
+                            tvoc:result[3]
+                        }
+                        axios
+                            .post('http://localhost:8082/api/books',data)
+                            .catch(err => {
+                                console.log("Error in post record!");
+                              })
                         //ref:  s = str(humidity)+","+str(temp)+","+str(eco2)+","+str(tvoc) + ","+str(altitude)
                         this.setState({
                             humidity: Math.round(result[0] * 100) / 100,
@@ -268,9 +278,18 @@ class Dashboard extends React.Component {
                         break
                     // keep reporting error if not aware user
                     case ("IC.embedded/SWAY/" + channel + "/2sec"):
-                        //console.log("2sec"+','+msg)
                         var result = msg.split(",");
-                        //s = str(angle)+","+ direction
+                        var data2 = {
+                            dir:result[1],
+                            angle:result[0]
+                        }
+                        axios
+                            .post('http://localhost:8082/api/books',data2)
+                            .catch(err => {
+                                console.log("Error in CreateBook!");
+                              })
+                       
+                    
                         this.setState({
                             angle: Math.round(result[0] * 100) / 100,
                             direction: result[1]

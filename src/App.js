@@ -134,7 +134,15 @@ function SetDisplay(props) {
   console.log("page" + page)
   if (page === "login") {
     if (login === "Login") {
-      return <Login handleLogin={handleLogin} />
+      //return <Login handleLogin={handleLogin} />
+      return <Dashboard 
+        tempH={props.tempH}
+        tempL={props.tempL}
+        tvocV={props.tvocV}
+        eco2V={props.eco2V}
+        limit={props.limit}
+      />
+      
     } else {
       return <Dashboard 
         tempH={props.tempH}
