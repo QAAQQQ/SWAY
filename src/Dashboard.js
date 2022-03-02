@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"tvocV",
-                                    message: 'Extreme Weather for Long',
+                                    message: 'Excessive TVOC for Long',
                                     description:
                                         'TVOC above '+this.props.tvocV+' PPB for over '+ dif +'s',
                                     duration: 0,
@@ -259,7 +259,7 @@ class Dashboard extends React.Component {
                                 notification.error({
                                     placement:"bottomLeft",
                                     key:"temphot",
-                                    message: 'Extreme Weather for Long',
+                                    message: 'Excessive ECO2 for Long',
                                     description:
                                         'ECO2 above '+this.props.eco2V+' PPM for over '+ dif +'s',
                                     duration: 0,
