@@ -15,10 +15,10 @@ class Environment extends React.Component {
         var display1 = "- -"
         var display2 = "- -"
         if (this.props.tvoc != null && this.props.active) {
-            display1 = this.props.tvoc
+            display1 = this.props.tvoc + ' PPB'
         }
         if (this.props.eco2 != null && this.props.active) {
-            display2 = this.props.eco2
+            display2 = this.props.eco2 + ' PPM'
         }
 
         return (

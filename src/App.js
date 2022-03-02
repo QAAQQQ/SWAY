@@ -134,7 +134,7 @@ function SetDisplay(props) {
   console.log("page" + page)
   if (page === "login") {
     if (login === "Login") {
-      return <Login handleLogin={handleLogin} />   
+      return <Login handleLogin={handleLogin} />
     } else {
       return <Dashboard 
         tempH={props.tempH}

@@ -22,11 +22,11 @@ function FAQ() {
                     </p>
                 </Panel>
                 <Panel header=" Is there an APP for this?" key="3">
-                    <p>No, it is still under development. But you can always acces the dashboard in the browser for free though the website link!</p>
+                    <p>No, it is still under development. But you can always access the dashboard in the browser for free through the website link!</p>
                 </Panel>
                 <Panel header=" What to do when the website cannot connect to the walking stick?" key="1">
                     <p>1. Refresh the website and try again. </p>
-                    <p>2. Check you network is working properly and the walking stick is connected to Internet. Then restart the walking stick. </p>
+                    <p>2. Check your network is working properly and the walking stick is connected to Internet. Then restart the walking stick. </p>
                     <p>If none of them works, contact the support team.</p>
                 </Panel>
 

@@ -93,7 +93,7 @@ class Connect extends React.Component {
                             onChange={this.handleInputChange} />
                     </Form.Item>
                 </Form>
-                <Text style={{paddingLeft:'15px'}} type="secondary">Note: Befor going to Settings, please DISCONNECT!</Text>
+                <Text style={{paddingLeft:'15px'}} type="secondary">Note: Before going to Settings, please DISCONNECT!</Text>
             </Card>
         );
     }
