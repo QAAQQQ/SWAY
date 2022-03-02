@@ -144,7 +144,7 @@ class Dashboard extends React.Component {
                                     key:"temphot",
                                     message: 'Extreme Whether For Long',
                                     description:
-                                        'Temperature above '+this.props.tempH+' °C at for over '+ dif +'s',
+                                        'Temperature above '+this.props.tempH+' °C for over '+ dif +'s',
                                     duration: 0,
                                 })
                             }
@@ -179,7 +179,7 @@ class Dashboard extends React.Component {
                                     key:"tempcold",
                                     message: 'Extreme Whether For Long',
                                     description:
-                                        'Temperature below '+this.props.tempL+' °C at for over '+ dif +'s',
+                                        'Temperature below '+this.props.tempL+' °C for over '+ dif +'s',
                                     duration: 0,
                                 })
                             }
@@ -225,7 +225,7 @@ class Dashboard extends React.Component {
                                     key:"tvocV",
                                     message: 'Extreme Whether For Long',
                                     description:
-                                        'TVOC above '+this.props.tvocV+' PPB at for over '+ dif +'s',
+                                        'TVOC above '+this.props.tvocV+' PPB for over '+ dif +'s',
                                     duration: 0,
                                 })
                             }
@@ -261,7 +261,7 @@ class Dashboard extends React.Component {
                                     key:"temphot",
                                     message: 'Extreme Whether For Long',
                                     description:
-                                        'ECO2 above '+this.props.eco2V+' PPM at for over '+ dif +'s',
+                                        'ECO2 above '+this.props.eco2V+' PPM for over '+ dif +'s',
                                     duration: 0,
                                 })
                             }
